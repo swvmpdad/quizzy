@@ -45,4 +45,20 @@ var questions = [
     }
 ];
 
+// Display question and answer
 
+// allow for clicking of answer
+
+// check option vs correct answer
+
+// display correct or incorrect
+
+// move to next question
+
+// set up a timer
+
+// subtract from timer when wrong answer
+
+// save remaining time as high score
+
+// save high score to local storage
