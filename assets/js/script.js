@@ -44,8 +44,35 @@ var questions = [
         ]
     }
 ];
+var seconds = 90;
 
-// Display question and answer
+var countdownTimer = function(seconds) {
+    let counter = seconds;
+
+    const interval = setInterval(() => {
+        counter--;
+        var timeLeft = document.getElementById("time-left");
+        var timerHeading = document.getElementById("timer-heading");
+        if (counter > 0) {
+            timeLeft.innerHTML = counter;
+        }
+        else if (counter < 0 ) {
+            clearInterval(interval);
+            timeLeft.innerHTML = "";
+            timerHeading.innerHTML = "Time's Up!";
+        }
+    }, 1000);
+}
+
+var startQuiz = function () {
+    countdownTimer(seconds);
+    
+    for (var i = 0; i < questions.length; i++) {
+        
+    }
+};
+
+// function to display questions and answers
 
 // allow for clicking of answer
 
