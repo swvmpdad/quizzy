@@ -1,3 +1,10 @@
+var question = document.getElementById("question");
+var answer1 = document.getElementById("answer-one");
+var answer2 = document.getElementById("answer-two");
+var answer3 = document.getElementById("answer-three");
+var answer4 = document.getElementById("answer-four");
+var startButton = document.getElementById("start-btn");
+
 var questions = [
     {
         prompt: 1,
@@ -62,15 +69,35 @@ var countdownTimer = function(seconds) {
             timerHeading.innerHTML = "Time's Up!";
         }
     }, 1000);
+    return counter;
+    return seconds;
 }
 
 var startQuiz = function () {
     countdownTimer(seconds);
     
     for (var i = 0; i < questions.length; i++) {
-        
+        if (seconds > 0) {
+            question.innerHTML = questions[i].question;
+            answer1.innerHTML = "<button class = 'answer-btn'>" + questions[i].options[0] + "</button>";
+            answer2.innerHTML = "<button class = 'answer-btn'>" + questions[i].options[1] + "</button>";
+            answer3.innerHTML = "<button class = 'answer-btn'>" + questions[i].options[2] + "</button>";
+            answer4.innerHTML = "<button class = 'answer-btn'>" + questions[i].options[3] + "</button>";
+        }
+        else if (seconds < 0) {
+            question.innerHTML = "";
+            answer1.innerHTML = "";
+            answer2.innerHTML = "";
+            answer3.innerHTML = "";
+            answer4.innerHTML = "";
+            break;
+        }
     }
 };
+
+startButton.addEventListener('click', function(event) {
+    startQuiz();
+})
 
 // function to display questions and answers
 
