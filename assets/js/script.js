@@ -1,7 +1,7 @@
 var seconds = 90;
 var result = document.getElementById('result-message');
 var startButton = document.getElementById("start-btn");
-var counter = 0;
+var counter = null;
 
 // array storing the quiz
 var questions = [
@@ -49,46 +49,54 @@ var questions = [
 
 // Timer function
 var countdownTimer = function(num) {
-    let counter = num;
-
-    const interval = setInterval(() => {
-        counter--;
         var timeLeft = document.getElementById("time-left");
-        var timerHeading = document.getElementById("timer-heading");
-        if (counter > 0) {
-            timeLeft.innerHTML = counter;
-        }
-        else if (counter < 0 ) {
-            clearInterval(interval);
-            var question = document.getElementById("question");
-            var ans1 = document.getElementById("answer-one");
-            var ans2 = document.getElementById("answer-two");
-            var ans3 = document.getElementById("answer-three");
-            var ans4 = document.getElementById("answer-four");
-            var evalBtn = document.getElementById("evaluate");
-            timeLeft.innerHTML = "";
-            timerHeading.innerHTML = "Time's Up! Your score is 0!";
-            question.innerHTML = "";
-            ans1.innerHTML = "";
-            ans2.innerHTML = "";
-            ans3.innerHTML = "";
-            ans4.innerHTML = "";
-            result.innerHTML = "";
-            evalBtn.innerHTML = "";
-        }
-    }, 1000)
+        let counter = num;
+
+
+        const interval = setInterval(() => {
+            counter--;
+            
+            var timerHeading = document.getElementById("timer-heading");
+            if (counter > 0) {
+                timeLeft.innerHTML = counter;
+            }
+            else if (counter < 0 ) {
+                clearInterval(interval);
+                var question = document.getElementById("question");
+                var ans1 = document.getElementById("answer-one");
+                var ans2 = document.getElementById("answer-two");
+                var ans3 = document.getElementById("answer-three");
+                var ans4 = document.getElementById("answer-four");
+                var evalBtn = document.getElementById("evaluate");
+                timeLeft.innerHTML = "";
+                timerHeading.innerHTML = "Time's Up! Your score is 0!";
+                question.innerHTML = "";
+                ans1.innerHTML = "";
+                ans2.innerHTML = "";
+                ans3.innerHTML = "";
+                ans4.innerHTML = "";
+                result.innerHTML = "";
+                evalBtn.innerHTML = "";
+            }
+        }, 1000)
     };
 
 function recordScore(num) {
+    var question = document.getElementById("question");
     var highScore = localStorage.getItem("high score");
+    parseInt(highScore);
     var score = num;
 
     if (score > highScore) {
-    localStorage.setItem("high score", score);
-    var question = document.getElementById("question");
-    question.innerHTML = "You got the high score!";
+        localStorage.setItem("high score", score);
+        var question = document.getElementById("question");
+        question.innerHTML = "You got the high score of " + score + "!";
+    } else if (highScore === null) {
+        localStorage.setItem("high score", score);
+        var question = document.getElementById("question");
+        question.innerHTML = "You got the high score of " + score + "!";
     } else {
-    question.innerHTML = "You didn't get the high score. Refresh the page and try again!";
+    question.innerHTML = "Your score of " + score + " didn't get the high score. Refresh the page and try again!";
     }
 }
 
@@ -171,26 +179,22 @@ function iterate(id) {
             result.innerHTML = "Incorrect!";
             id++;
             iterate(id);
-            var time = document.getElementById("time-left");
-            timer = document.getElementById("time-left").innerHTML;
-            timer = timer - 20;
-            time.innerHTML = timer; 
+            counter = document.getElementById("time-left").innerHTML - 20;
+            countdownTimer(counter)
         }
     })   
-} else if (id > 4) {
+} else if (id >= 4) {
     var timer = document.getElementById("time-left").innerHTML;
     var ans1 = document.getElementById("answer-one");
     var ans2 = document.getElementById("answer-two");
     var ans3 = document.getElementById("answer-three");
     var ans4 = document.getElementById("answer-four");
     var question = document.getElementById("question");
-    question.innerText = "You have finished the quiz with a score of " + timer + "!";
     ans1.innerHTML = "";
     ans2.innerHTML = "";
     ans3.innerHTML = "";
     ans4.innerHTML = "";
     result.innerHTML = "";
-    clearInterval(interval);
     recordScore(timer);
 } 
 };
