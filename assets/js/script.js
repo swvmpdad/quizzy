@@ -1,6 +1,5 @@
 var seconds = 90;
 var result = document.getElementById('result-message');
-// array storing the HTML elements for the answers
 var startButton = document.getElementById("start-btn");
 var counter = 0;
 
@@ -48,11 +47,9 @@ var questions = [
     }
 ];
 
-function iterate(id) {
-    if (id < 3) {
-    // Timer function
-    var countdownTimer = function(seconds) {
-    let counter = seconds;
+// Timer function
+var countdownTimer = function(num) {
+    let counter = num;
 
     const interval = setInterval(() => {
         counter--;
@@ -63,19 +60,40 @@ function iterate(id) {
         }
         else if (counter < 0 ) {
             clearInterval(interval);
+            var question = document.getElementById("question");
+            var ans1 = document.getElementById("answer-one");
+            var ans2 = document.getElementById("answer-two");
+            var ans3 = document.getElementById("answer-three");
+            var ans4 = document.getElementById("answer-four");
+            var evalBtn = document.getElementById("evaluate");
             timeLeft.innerHTML = "";
-            timerHeading.innerHTML = "Time's Up!";
+            timerHeading.innerHTML = "Time's Up! Your score is 0!";
             question.innerHTML = "";
             ans1.innerHTML = "";
             ans2.innerHTML = "";
             ans3.innerHTML = "";
             ans4.innerHTML = "";
             result.innerHTML = "";
+            evalBtn.innerHTML = "";
         }
-    }, 1000);
-    return counter;
+    }, 1000)
     };
-    countdownTimer(seconds);
+
+function recordScore(num) {
+    var highScore = localStorage.getItem("high score");
+    var score = num;
+
+    if (score > highScore) {
+    localStorage.setItem("high score", score);
+    var question = document.getElementById("question");
+    question.innerHTML = "You got the high score!";
+    } else {
+    question.innerHTML = "You didn't get the high score. Refresh the page and try again!";
+    }
+}
+
+function iterate(id) {
+    if (id < 4) {
     var question = document.getElementById("question");
     var evalBtn = document.getElementById("evaluate");
     evalBtn.innerHTML = "<button id='evaluate-btn'>Check Answer!</button>";
@@ -153,41 +171,37 @@ function iterate(id) {
             result.innerHTML = "Incorrect!";
             id++;
             iterate(id);
+            var time = document.getElementById("time-left");
+            timer = document.getElementById("time-left").innerHTML;
+            timer = timer - 20;
+            time.innerHTML = timer; 
         }
     })   
 } else if (id > 4) {
+    var timer = document.getElementById("time-left").innerHTML;
     var ans1 = document.getElementById("answer-one");
     var ans2 = document.getElementById("answer-two");
     var ans3 = document.getElementById("answer-three");
     var ans4 = document.getElementById("answer-four");
     var question = document.getElementById("question");
-    question.innerText = "You have finished the quiz with a score of " +  + "!";
-            ans1.innerHTML = "";
-            ans2.innerHTML = "";
-            ans3.innerHTML = "";
-            ans4.innerHTML = "";
-            result.innerHTML = "";
+    question.innerText = "You have finished the quiz with a score of " + timer + "!";
+    ans1.innerHTML = "";
+    ans2.innerHTML = "";
+    ans3.innerHTML = "";
+    ans4.innerHTML = "";
+    result.innerHTML = "";
+    clearInterval(interval);
+    recordScore(timer);
 } 
 };
 
 startButton.addEventListener('click', function() {
     iterate(0);
+    countdownTimer(seconds);
+    startButton = document.querySelector(".start");
+    startButton.innerHTML = "";
 });
 
-// function to display questions and answers
-
-// allow for clicking of answer
-
-// check option vs correct answer
-
-// display correct or incorrect
-
-// move to next question
-
-// set up a timer
-
 // subtract from timer when wrong answer
-
-// save remaining time as high score
 
 // save high score to local storage
