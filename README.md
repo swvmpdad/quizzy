@@ -10,7 +10,7 @@ A javaScript quiz about javaScript! <br />
 
 ## Snapshot of the site
 
-<img src="" alt="a screenshot of the site" width=500px height=250px>
+<img src="./assets/images/quizzysnapshot.png" alt="a screenshot of the site" width=500px height=250px>
 
 ## Website
 https://swvmpdad.github.io/quizzy/
